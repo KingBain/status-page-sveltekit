@@ -4,17 +4,17 @@ import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  preprocess: vitePreprocess(),
-  kit: {
-    alias: {
-      $lib: path.resolve('./src/lib')
-    },
-	adapter: adapter({
-		pages: 'public',
-		assets: 'public',
-		fallback: 'index.html' // This tells SvelteKit to generate a fallback file for dynamic routes
-	})
-  }
+	preprocess: vitePreprocess(),
+	kit: {
+		alias: {
+			$lib: path.resolve('./src/lib')
+		},
+		adapter: adapter({
+			pages: 'public',
+			assets: 'public',
+			fallback: 'index.html' // This tells SvelteKit to generate a fallback file for dynamic routes
+		})
+	}
 };
 
 export default config;

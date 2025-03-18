@@ -9,10 +9,10 @@ import { join } from "path";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
-let config
-if(fs.existsSync(join("..", ".uclirc.yml"))){
+let config;
+if (fs.existsSync(join("..", ".uclirc.yml"))) {
   config = load(fs.readFileSync(join("..", ".uclirc.yml"), "utf8"));
-}else{
+} else {
   config = load(fs.readFileSync(join("..", ".upptimerc.yml"), "utf8"));
 }
 

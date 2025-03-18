@@ -49,12 +49,12 @@ export const postProcess = async () => {
   if (config["status-website"] && config["status-website"].robotsText)
     await writeFile(
       join(".", "__sapper__", "export", "robots.txt"),
-      config["status-website"].robotsText
+      config["status-website"].robotsText,
     );
 
   await copyFile(
     join(".", "__sapper__", "export", "service-worker-index.html"),
-    join(".", "__sapper__", "export", "404.html")
+    join(".", "__sapper__", "export", "404.html"),
   );
 };
 
