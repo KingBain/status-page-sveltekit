@@ -13,7 +13,11 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"cy:run": "npx cypress run",
+		"cy:open": "npx cypress open",
+		"test": "npm run init-tests && run-p --race dev cy:run",
+		"init-tests": "ts-node init-tests.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -38,6 +42,7 @@
 		"@octokit/rest": "^21.1.1",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"chart.js": "^4.4.8",
-		"snarkdown": "^2.0.0"
+		"snarkdown": "^2.0.0",
+		"ts-node": "^10.9.2"
 	}
 }
