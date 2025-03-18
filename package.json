@@ -4,7 +4,8 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"pre-process": "npx ts-node pre-process.ts",
+		"pre-process": "npx tsx pre-process.ts",
+		"post-process": "npx tsx post-process.ts",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
