@@ -1,8 +1,8 @@
 <script>
-  import Loading from "../components/Loading.svelte";
+  import Loading from "$lib/components/Loading.svelte";
   import { onMount } from "svelte";
-  import config from "../data/config.json";
-  import { cachedResponse, createOctokit, handleError } from "../utils/createOctokit";
+  import config from "$lib/data/config.json";
+  import { cachedResponse, createOctokit, handleError } from "$lib/utils/createOctokit";
 
   let loading = true;
   const octokit = createOctokit();
