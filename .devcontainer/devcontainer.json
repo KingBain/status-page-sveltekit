@@ -15,7 +15,8 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm alias default $(cat .nvmrc) && npm install",
+	"postCreateCommand": "nvm install && nvm alias default $(cat .nvmrc) && npm install && npx cypress install --force",
+
 
 	// Configure tool-specific properties.
 	// "customizations": {},
