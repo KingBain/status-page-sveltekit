@@ -51,7 +51,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ steps.create_token.outputs.token }}
 
-      - run: HUSKY=0 npx nx affected -t semantic-release --parallel=1
+      - run: HUSKY=0 npx -t semantic-release --parallel=1
         env:
           GITHUB_TOKEN: ${{ steps.create_token.outputs.token  }}
           NPM_TOKEN: ${{ steps.create_token.outputs.token  }}
