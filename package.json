@@ -25,6 +25,8 @@
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@types/node": "^22.13.10",
+		"@types/rollup": "^0.51.4",
 		"cypress": "^14.2.0",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
