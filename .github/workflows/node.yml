@@ -16,7 +16,6 @@ jobs:
         with:
           app-id: ${{ vars.STATUS_NPM_PUBLISH_ID }}
           private-key: ${{ secrets.STATUS_NPM_PUBLISH_KEY }}
-          owner: ${{ github.repository_owner }}
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
