@@ -1,28 +1,11 @@
-name: Node CI
-on:
-  push:
-    branches:
-      - master
 jobs:
   release:
-    name: Build, test, and release
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    env:
+      NPM_TOKEN: ${{ steps.create_token.outputs.token }} 
     steps:
-      - name: Create App token
-        id: create_token
-        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2
-        with:
-          app-id: ${{ vars.STATUS_NPM_PUBLISH_ID }}
-          private-key: ${{ secrets.STATUS_NPM_PUBLISH_KEY }}
-          owner: ${{ github.repository_owner }}
-
       - name: Checkout
         uses: actions/checkout@v4.2.2
-        with:
-          token: ${{ steps.create_token.outputs.token }}
-          ref: ${{ github.ref_name }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v4.3.0
         with:
@@ -39,10 +22,11 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install dependencies
+        env:
+          NPM_TOKEN: ${{ steps.create_token.outputs.token }} 
         run: npm ci
       - name: Build TypeScript
         run: npm run build
-
       - name: Release
         run: npx semantic-release
         env:
