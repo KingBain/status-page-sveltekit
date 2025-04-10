@@ -16,6 +16,7 @@ jobs:
         with:
           app-id: ${{ vars.STATUS_NPM_PUBLISH_ID }}
           private-key: ${{ secrets.STATUS_NPM_PUBLISH_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -27,6 +28,7 @@ jobs:
         uses: actions/setup-node@v4.3.0
         with:
           node-version-file: ./.nvmrc
+          scope: "@KingBain"
           
       - name: Cache node modules
         uses: actions/cache@v4.2.3
