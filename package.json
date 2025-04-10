@@ -1,6 +1,6 @@
 {
-	"name": "new-status-page",
-	"private": true,
+	"name": "@KingBain/status-page",
+	"private": false,
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
@@ -48,5 +48,8 @@
 		"npm-run-all": "^4.1.5",
 		"snarkdown": "^2.0.0",
 		"ts-node": "^10.9.2"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
 	}
 }

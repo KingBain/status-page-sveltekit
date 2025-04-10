@@ -9,8 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
+      - name: Create App token
+        id: create_token
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2
+        with:
+          app-id: ${{ vars.STATUS_NPM_PUBLISH_ID }}
+          private-key: ${{ secrets.STATUS_NPM_PUBLISH_KEY }}
+          owner: ${{ github.repository_owner }}
+
       - name: Checkout
         uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ steps.create_token.outputs.token }}
+          ref: ${{ github.ref_name }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4.3.0
         with:
@@ -30,11 +42,12 @@ jobs:
         run: npm ci
       - name: Build TypeScript
         run: npm run build
+
       - name: Release
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.create_token.outputs.token }}
+          NPM_TOKEN: ${{ steps.create_token.outputs.token }}
           GIT_AUTHOR_NAME: "Koj Bot"
           GIT_AUTHOR_EMAIL: "bot@koj.co"
           GIT_COMMITTER_NAME: "Koj Bot"
