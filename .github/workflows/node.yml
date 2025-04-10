@@ -7,17 +7,12 @@ jobs:
   release:
     name: Build, test, and release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
-      - name: Create App token
-        id: create_token
-        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2
-        with:
-          app-id: ${{ vars.STATUS_NPM_PUBLISH_ID }}
-          private-key: ${{ secrets.STATUS_NPM_PUBLISH_KEY }}
-          owner: ${{ github.repository_owner }}
-
       - name: Checkout
         uses: actions/checkout@v4.2.2
         with:
@@ -27,20 +22,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4.3.0
         with:
+          registry-url: 'https://npm.pkg.github.com'
           node-version-file: ./.nvmrc
           scope: "@kingbain"
-          
-      - name: Cache node modules
-        uses: actions/cache@v4.2.3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install dependencies
         run: npm ci
@@ -53,11 +37,9 @@ jobs:
           NPM_TOKEN: ${{ steps.create_token.outputs.token }}
 
       - name: Release
-        run: npx semantic-release
+        run: npm publish
         env:
-          GITHUB_TOKEN: ${{ steps.create_token.outputs.token }}
-          NPM_TOKEN: ${{ steps.create_token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ steps.create_token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
