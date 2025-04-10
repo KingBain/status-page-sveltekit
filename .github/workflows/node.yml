@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4.3.0
         with:
           node-version-file: ./.nvmrc
-          scope: "@KingBain"
+          scope: "@kingbain"
           
       - name: Cache node modules
         uses: actions/cache@v4.2.3
@@ -52,11 +52,12 @@ jobs:
         env:
           NPM_TOKEN: ${{ steps.create_token.outputs.token }}
 
-      - run: HUSKY=0 npx -t semantic-release --parallel=1
+      - name: Release
+        run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ steps.create_token.outputs.token  }}
-          NPM_TOKEN: ${{ steps.create_token.outputs.token  }}
-          NODE_AUTH_TOKEN: ${{ steps.create_token.outputs.token  }}
+          GITHUB_TOKEN: ${{ steps.create_token.outputs.token }}
+          NPM_TOKEN: ${{ steps.create_token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ steps.create_token.outputs.token }}
 
 
 

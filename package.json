@@ -1,12 +1,11 @@
 {
-	"name": "@KingBain/status-page",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/KingBain/new-status-page.git"
-	},
+	"name": "@kingbain/status-page",
 	"private": false,
 	"version": "0.0.1",
 	"type": "module",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
 	"scripts": {
 		"pre-process": "npx tsx pre-process.ts",
 		"post-process": "npx tsx post-process.ts",
