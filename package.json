@@ -1,9 +1,9 @@
 {
 	"name": "@kingbain/status-page",
 	"private": false,
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"type": "module",
-	"repository":"https://github.com/KingBain/new-status-page",
+	"repository": "https://github.com/KingBain/new-status-page",
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
 	},
