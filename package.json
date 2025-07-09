@@ -12,6 +12,7 @@
 		"post-process": "npx tsx post-process.ts",
 		"dev": "vite dev",
 		"build": "vite build",
+		"export": "npm run pre-process && npm run post-process",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
