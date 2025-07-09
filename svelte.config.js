@@ -9,16 +9,23 @@ const config = {
 		alias: {
 			$lib: path.resolve('./src/lib')
 		},
+
+		// specify your base path for deployment (e.g. GitHub Pages subdirectory)
+		paths: {
+			base: '/dummy-status',
+			assets: '/dummy-status'
+		},
+
 		adapter: adapter({
 			pages: '__sapper__/export',
 			assets: '__sapper__/export',
 			fallback: 'index.html'
 		}),
+
 		// prerender all routes (generate static pages)
 		prerender: {
 			entries: ['*']
 		}
-
 	}
 };
 
