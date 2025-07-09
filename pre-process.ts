@@ -39,7 +39,7 @@ export const preProcess = async () => {
 	config.i18n = { ...i18n, ...config.i18n };
 
 	// Ensure the directory exists; mkdir with { recursive: true } works like ensureDir.
-	const dataDir = join('.', 'src', 'data');
+	const dataDir = join('.', 'src', 'lib', 'data');
 	await mkdir(dataDir, { recursive: true });
 
 	// Write the final configuration to a JSON file.
