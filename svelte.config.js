@@ -10,15 +10,11 @@ const config = {
 			$lib: path.resolve('./src/lib')
 		},
 		adapter: adapter({
-			pages: 'status-page/__sapper__/export',
-			assets: 'status-page/__sapper__/export',
+			pages: '__sapper__/export',
+			assets: '__sapper__/export',
 			fallback: 'index.html'
-		}),
+		})
 
-		// prerender all routes by default (similar to Sapper export)
-		prerender: {
-			default: true
-		}
 	}
 };
 
