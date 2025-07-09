@@ -13,7 +13,11 @@ const config = {
 			pages: '__sapper__/export',
 			assets: '__sapper__/export',
 			fallback: 'index.html'
-		})
+		}),
+		// prerender all routes (generate static pages)
+		prerender: {
+			entries: ['*']
+		}
 
 	}
 };
