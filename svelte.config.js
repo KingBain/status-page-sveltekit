@@ -10,10 +10,15 @@ const config = {
 			$lib: path.resolve('./src/lib')
 		},
 		adapter: adapter({
-			pages: 'public',
-			assets: 'public',
-			fallback: 'index.html' // This tells SvelteKit to generate a fallback file for dynamic routes
-		})
+			pages: 'status-page/__sapper__/export',
+			assets: 'status-page/__sapper__/export',
+			fallback: 'index.html'
+		}),
+
+		// prerender all routes by default (similar to Sapper export)
+		prerender: {
+			default: true
+		}
 	}
 };
 
