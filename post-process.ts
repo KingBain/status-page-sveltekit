@@ -15,11 +15,12 @@ export const postProcess = async () => {
       baseUrl?: string;
     };
   };
-  const baseUrl = cfg['status-website']?.baseUrl || '/';
+  //const baseUrl = cfg['status-website']?.baseUrl || '/';
+  const baseUrl = (cfg["status-website"] || {}).baseUrl || "/";
 
   // 2) run the SvelteKit build
   console.log('Running `npm run build`…');
-  execSync('npm run build', { stdio: 'inherit' });
+  execSync('npm run build', { stdio: 'inherit', env: { ...process.env, BASE_PATH: baseUrl } });
 
   const out = join('.', 'build');
   console.log('Output directory:', out);

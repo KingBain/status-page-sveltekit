@@ -9,6 +9,9 @@ const config = {
 		alias: {
 			$lib: path.resolve('./src/lib')
 		},
+		paths: {
+			base: process.env.BASE_PATH ?? ''
+		  },
 		adapter: adapter({
 			pages: '__sapper__/export',
 			assets: '__sapper__/export',
