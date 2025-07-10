@@ -12,7 +12,7 @@ const config = {
 			$lib: path.resolve('./src/lib')
 		},
 		paths: {
-			base: siteConfig.baseUrl || ''
+			base: "/dummy-status"
 		  },
 		adapter: adapter({
 			pages: '__sapper__/export',
