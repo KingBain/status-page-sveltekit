@@ -6,8 +6,7 @@ import { execSync } from 'child_process';
 
 export const postProcess = async () => {
   // 1) load your baseUrl+CNAME config
-  const cfg = load(
-    await fs.readFile(join('..', '.upptimerc.yml'), 'utf8')
+  const cfg = load(await fs.readFile(join('..', '.upptimerc.yml'), 'utf8')
   ) as {
     'status-website'?: {
       cname?: string;
@@ -15,11 +14,10 @@ export const postProcess = async () => {
       baseUrl?: string;
     };
   };
-  //const baseUrl = cfg['status-website']?.baseUrl || '/';
-  const baseUrl = (cfg["status-website"] || {}).baseUrl || "/";
+  const baseUrl = cfg['status-website']?.baseUrl || '';
 
   // 2) run the SvelteKit build
-  console.log('Running `npm run build`…');
+  console.log(`Running npm run build… with basepath "${baseUrl}"`);
   execSync('npm run build', { stdio: 'inherit', env: { ...process.env, BASE_PATH: baseUrl } });
 
   const out = join('.', 'build');
