@@ -1,84 +1,69 @@
-import fsExtra from 'fs-extra';
+// post-process.ts
+import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import { join } from 'path';
+import { execSync } from 'child_process';
 
 export const postProcess = async () => {
-	// Log current working directory
-	console.log('Current working directory:', process.cwd());
+  // 1) load your baseUrl+CNAME config
+  const cfg = load(
+    await fs.readFile(join('..', '.upptimerc.yml'), 'utf8')
+  ) as {
+    'status-website'?: {
+      cname?: string;
+      robotsText?: string;
+      baseUrl?: string;
+    };
+  };
+  const baseUrl = cfg['status-website']?.baseUrl || '/';
 
-	// Load configuration from .upptimerc.yml (assumed to be in the parent directory)
-	const config: {
-		'status-website'?: {
-			cname?: string;
-			robotsText?: string;
-			baseUrl?: string;
-		};
-	} = load(await fsExtra.readFile(join('..', '.upptimerc.yml'), 'utf8')) as any;
-	const baseUrl = (config['status-website'] || {}).baseUrl || '/';
+  // 2) run the SvelteKit build
+  console.log('Running `npm run build`…');
+  execSync('npm run build', { stdio: 'inherit' });
 
-	// Set the output directory to "public"
-	const publicDir = join('.', 'public');
-	console.log('Using public directory:', publicDir);
+  const out = join('.', 'build');
+  console.log('Output directory:', out);
 
-	// Ensure the public directory exists
-	await fsExtra.ensureDir(publicDir);
-	console.log('Public folder ensured.');
+  // 3) if you built under a sub-folder, hoist its contents up
+  if (baseUrl !== '/') {
+    const nested = join(out, baseUrl);
+    if (await fs.pathExists(nested)) {
+      console.log(`Moving files from ${nested} → ${out}`);
+      await fs.copy(nested, out, { recursive: true });
+      await fs.remove(nested);
+    }
+  }
 
-	// If a custom baseUrl is specified, move files from that subfolder to the public root
-	if (baseUrl !== '/') {
-		const baseUrlDir = join(publicDir, baseUrl);
-		if (await fsExtra.pathExists(baseUrlDir)) {
-			console.log('Moving files from', baseUrlDir, 'to', publicDir);
-			await fsExtra.copy(baseUrlDir, publicDir);
-			await fsExtra.remove(baseUrlDir);
-		}
-	}
+  // 4) write CNAME if you have one
+  const [owner, repo] = (process.env.GITHUB_REPOSITORY || '').split('/');
+  const cname = cfg['status-website']?.cname;
+  if (cname && cname !== 'demo.upptime.js.org') {
+    console.log('Writing CNAME:', cname);
+    await fs.writeFile(join(out, 'CNAME'), cname);
+  } else if (
+    cname === 'demo.upptime.js.org' &&
+    owner === 'upptime' &&
+    repo === 'upptime'
+  ) {
+    console.log('Writing CNAME for demo.upptime.js.org');
+    await fs.writeFile(join(out, 'CNAME'), cname);
+  }
 
-	// Copy the assets folder (if it exists) into the public directory
-	try {
-		const assetsDir = join('.', 'assets');
-		if (await fsExtra.pathExists(assetsDir)) {
-			console.log('Copying assets from', assetsDir, 'to', publicDir);
-			await fsExtra.copy(assetsDir, publicDir, { recursive: true });
-		}
-	} catch (error) {
-		console.log('Got an error in copying assets', error);
-	}
+  // 5) write robots.txt if specified
+  const robots = cfg['status-website']?.robotsText;
+  if (robots) {
+    console.log('Writing robots.txt');
+    await fs.writeFile(join(out, 'robots.txt'), robots);
+  }
 
-	// Write the CNAME file if a custom domain is set.
-	const [owner, repo] = (process.env.GITHUB_REPOSITORY || '').split('/');
-	if (
-		config['status-website'] &&
-		config['status-website'].cname &&
-		config['status-website'].cname !== 'demo.upptime.js.org'
-	) {
-		console.log('Writing CNAME:', config['status-website'].cname);
-		await fsExtra.writeFile(join(publicDir, 'CNAME'), config['status-website'].cname);
-	} else if (
-		config['status-website'] &&
-		config['status-website'].cname &&
-		config['status-website'].cname === 'demo.upptime.js.org' &&
-		owner === 'upptime' &&
-		repo === 'upptime'
-	) {
-		console.log('Writing CNAME for demo.upptime.js.org');
-		await fsExtra.writeFile(join(publicDir, 'CNAME'), 'demo.upptime.js.org');
-	}
+  // 6) make 404.html from service-worker index if present
+  const sw = join(out, 'service-worker-index.html');
+  if (await fs.pathExists(sw)) {
+    console.log('Copying service-worker-index.html → 404.html');
+    await fs.copyFile(sw, join(out, '404.html'));
+  }
 
-	// Write a robots.txt file if provided in the configuration
-	if (config['status-website'] && config['status-website'].robotsText) {
-		console.log('Writing robots.txt');
-		await fsExtra.writeFile(join(publicDir, 'robots.txt'), config['status-website'].robotsText);
-	}
-
-	// Copy service-worker-index.html to create a 404.html file, if it exists
-	const swIndex = join(publicDir, 'service-worker-index.html');
-	if (await fsExtra.pathExists(swIndex)) {
-		console.log('Copying service-worker-index.html to 404.html');
-		await fsExtra.copyFile(swIndex, join(publicDir, '404.html'));
-	}
-
-	console.log('Post process completed successfully.');
+  console.log('Post-process complete.');
 };
 
 postProcess();

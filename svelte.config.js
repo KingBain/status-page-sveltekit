@@ -1,8 +1,6 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
-import siteConfig from './src/lib/data/config.json' with { type: 'json' };
-
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,9 +9,6 @@ const config = {
 		alias: {
 			$lib: path.resolve('./src/lib')
 		},
-		paths: {
-			base: siteConfig.baseUrl || ''
-		  },
 		adapter: adapter({
 			pages: '__sapper__/export',
 			assets: '__sapper__/export',
