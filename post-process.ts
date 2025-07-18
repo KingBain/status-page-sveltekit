@@ -55,13 +55,6 @@ export const postProcess = async () => {
     await fs.writeFile(join(out, 'robots.txt'), robots);
   }
 
-  // 6) make 404.html from service-worker index if present
-  const sw = join(out, 'service-worker-index.html');
-  if (await fs.pathExists(sw)) {
-    console.log('Copying service-worker-index.html → 404.html');
-    await fs.copyFile(sw, join(out, '404.html'));
-  }
-
   console.log('Post-process complete.');
 };
 
