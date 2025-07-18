@@ -31,8 +31,6 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - run: npm run build
-
       - name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
