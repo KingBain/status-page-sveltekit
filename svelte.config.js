@@ -15,7 +15,7 @@ const config = {
 		adapter: adapter({
 			pages: '__sapper__/export',
 			assets: '__sapper__/export',
-			fallback: 'index.html'
+			fallback: '404.html'
 		}),
 		// prerender all routes (generate static pages)
 		prerender: {
