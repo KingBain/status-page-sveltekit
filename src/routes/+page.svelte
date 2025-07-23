@@ -1,5 +1,6 @@
 <script>
 	import snarkdown from 'snarkdown';
+	import { t } from 'svelte-i18n';
 	import ActiveIncidents from '$lib/components/ActiveIncidents.svelte';
 	import ActiveScheduled from '$lib/components/ActiveScheduled.svelte';
 	import Incidents from '$lib/components/Incidents.svelte';
@@ -7,29 +8,17 @@
 	import Scheduled from '$lib/components/Scheduled.svelte';
 	import config from '$lib/data/config.json';
 
-	let title = 'Status';
-	try {
-		title = config['status-website'].name;
-	} catch (error) {}
 </script>
 
 <svelte:head>
-	<title>{title}</title>
+	<title>{$t('siteTitle')}</title>
 </svelte:head>
 
 <header>
-	{#if config['status-website']}
-		{#if config['status-website'].introTitle}
-			<h1>
-				{@html snarkdown(config['status-website'].introTitle)}
-			</h1>
-		{/if}
-		{#if config['status-website'].introMessage}
-			<p class="lead">
-				{@html snarkdown(config['status-website'].introMessage)}
-			</p>
-		{/if}
-	{/if}
+  <h1>{@html snarkdown($t('introTitle'))}</h1>
+  <p class="lead">
+    {@html snarkdown($t('introMessage'))}
+  </p>
 </header>
 
 <ActiveIncidents />

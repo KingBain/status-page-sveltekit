@@ -1,9 +1,11 @@
-<script>
-	import Nav from '$lib/components/Nav.svelte';
-	import config from '$lib/data/config.json';
-	import snarkdown from 'snarkdown';
-	export let segment;
+<script lang="ts">
+  import '$lib/utils/i18n';
+  import Nav from '$lib/components/Nav.svelte';
+  import config from '$lib/data/config.json';
+  import snarkdown from 'snarkdown';
+  export let segment: string;
 </script>
+
 
 <svelte:head>
 	{#if (config['status-website'] || {}).customHeadHtml}
