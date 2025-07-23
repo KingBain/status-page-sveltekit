@@ -40,7 +40,7 @@
 </script>
 
 <div class="f changed" bind:this={form}>
-	<h2>{config.i18n.liveStatus}</h2>
+	<h2>{$t('liveStatus')}</h2>
 	<form class="f r">
 		<div>
 			<input
@@ -50,7 +50,7 @@
 				type="radio"
 				on:change={changed}
 				id="data_day"
-			/><label for="data_day">{config.i18n.duration24H}</label>
+			/><label for="data_day">{$t('duration24H')}</label>
 		</div>
 		<div>
 			<input
@@ -60,7 +60,7 @@
 				type="radio"
 				on:change={changed}
 				id="data_week"
-			/><label for="data_week">{config.i18n.duration7D}</label>
+			/><label for="data_week">{$t('duration7D')}</label>
 		</div>
 		<div>
 			<input
@@ -70,7 +70,7 @@
 				type="radio"
 				on:change={changed}
 				id="data_month"
-			/><label for="data_month">{config.i18n.duration30D}</label>
+			/><label for="data_month">{$t('duration30D')}</label>
 		</div>
 		<div>
 			<input
@@ -80,7 +80,7 @@
 				type="radio"
 				on:change={changed}
 				id="data_year"
-			/><label for="data_year">{config.i18n.duration1Y}</label>
+			/><label for="data_year">{$t('duration1Y')}</label>
 		</div>
 		<div>
 			<input
@@ -90,7 +90,7 @@
 				type="radio"
 				on:change={changed}
 				id="data_all"
-			/><label for="data_all">{config.i18n.durationAll}</label>
+			/><label for="data_all">{$t('durationAll')}</label>
 		</div>
 	</form>
 </div>
@@ -118,7 +118,7 @@
 					<a href={`${config.path}/history/${site.slug}`}>{site.name}</a>
 				</h4>
 				<div>
-					{@html config.i18n.overallUptime.split('$UPTIME')[0]}
+					{@html $t('overallUptime').split('$UPTIME')[0]}
 					<span class="data"
 						>{selected === 'day'
 							? site.uptimeDay
@@ -129,12 +129,12 @@
 									: selected === 'year'
 										? site.uptimeYear
 										: site.uptime}
-						{@html config.i18n.overallUptime.split('$UPTIME')[1]}</span
+						{@html $t('overallUptime').split('$UPTIME')[1]}</span
 					>
 				</div>
 				{#if site.showAverageResponseTime === undefined || site.showAverageResponseTime}
 					<div>
-						{@html config.i18n.averageResponseTime.split('$TIME')[0]}
+						{@html $t('averageResponseTime').split('$TIME')[0]}
 						<span class="data"
 							>{selected === 'day'
 								? site.timeDay
@@ -145,7 +145,7 @@
 										: selected === 'year'
 											? site.timeYear
 											: site.time}
-							{@html config.i18n.averageResponseTime.split('$TIME')[1]}</span
+							{@html $t('averageResponseTime').split('$TIME')[1]}</span
 						>
 					</div>
 				{/if}

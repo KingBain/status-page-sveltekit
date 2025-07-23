@@ -44,7 +44,7 @@
 	{#if loading}
 		<Loading />
 	{:else if incidents.length}
-		<h2>{config.i18n.pastScheduledMaintenance}</h2>
+		<h2>{$t('pastScheduledMaintenance')}</h2>
 		{#each incidents as incident}
 			{#if incident.showHeading}
 				<h3>{new Date(incident.created_at).toLocaleDateString($t('locale'))}</h3>
@@ -57,7 +57,7 @@
 					</div>
 					<div class="f r">
 						<a href={`${config.path}/incident/${incident.number}`}>
-							{config.i18n.incidentReport.replace(/\$NUMBER/g, incident.number)}
+							{$t('incidentReport').replace(/\$NUMBER/g, incident.number)}
 						</a>
 					</div>
 				</div>
