@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import config from '$lib/data/config.json';
 	import { cachedResponse, createOctokit, handleError } from '$lib/utils/createOctokit';
+	import { t } from 'svelte-i18n';
 
 	let loading = true;
 	const octokit = createOctokit();
@@ -46,7 +47,7 @@
 		<h2>{config.i18n.pastScheduledMaintenance}</h2>
 		{#each incidents as incident}
 			{#if incident.showHeading}
-				<h3>{new Date(incident.created_at).toLocaleDateString(config.i18n.locale)}</h3>
+				<h3>{new Date(incident.created_at).toLocaleDateString($t('locale'))}</h3>
 			{/if}
 			<article class="link degraded">
 				<div class="f">

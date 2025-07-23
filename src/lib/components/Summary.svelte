@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import config from '$lib/data/config.json';
 	import { handleError } from '$lib/utils/createOctokit';
+	import { t } from 'svelte-i18n';
 
 	export let slug;
 	let loading = true;

@@ -42,7 +42,7 @@
 
 		labels = commits
 			.filter((commit) => commit.commit.message.includes('ms) [skip ci]'))
-			.map((commit) => new Date(commit.commit.committer.date).toLocaleString(config.i18n.locale));
+			.map((commit) => new Date(commit.commit.committer.date).toLocaleString($t('locale')));
 		console.log('Labels array (commit dates):', labels);
 
 		loading = false;

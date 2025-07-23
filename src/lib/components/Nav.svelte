@@ -1,5 +1,6 @@
 <script>
 	import config from '$lib/data/config.json';
+	import { t } from 'svelte-i18n';
 	export let segment;
 </script>
 

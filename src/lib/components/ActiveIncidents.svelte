@@ -60,7 +60,7 @@
 							{$t('activeIncidentSummary')
 								.replace(
 									/\$DATE/g,
-									new Date(incident.created_at).toLocaleString(config.i18n.locale)
+									new Date(incident.created_at).toLocaleString($t('locale'))
 								)
 								.replace(/\$POSTS/g, incident.comments)}
 						</div>

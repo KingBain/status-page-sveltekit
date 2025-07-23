@@ -3,7 +3,8 @@
 	import { onMount } from 'svelte';
 	import config from '$lib/data/config.json';
 	import { createOctokit, handleError } from '$lib/utils/createOctokit';
-
+	import { t } from 'svelte-i18n';
+	
 	let loading = true;
 	const octokit = createOctokit();
 	const owner = config.owner;

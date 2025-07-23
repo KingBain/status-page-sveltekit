@@ -4,6 +4,7 @@
 	import snarkdown from 'snarkdown';
 	import config from '$lib/data/config.json';
 	import { cachedResponse, createOctokit, handleError } from '$lib/utils/createOctokit';
+	import { t } from 'svelte-i18n';
 
 	export let number;
 
@@ -95,10 +96,10 @@
 							? config.i18n.startedAt
 							: config.i18n.startsAt}
 					</dt>
-					<dd>{new Date(incident.metadata.start).toLocaleString(config.i18n.locale)}</dd>
+					<dd>{new Date(incident.metadata.start).toLocaleString($t('locale'))}</dd>
 				{:else}
 					<dt>{config.i18n.incidentOpenedAt}</dt>
-					<dd>{new Date(incident.created_at).toLocaleString(config.i18n.locale)}</dd>
+					<dd>{new Date(incident.created_at).toLocaleString($t('locale'))}</dd>
 				{/if}
 				{#if incident.metadata.start && incident.metadata.end}
 					<dt>{config.i18n.duration}</dt>
@@ -114,7 +115,7 @@
 					</dd>
 				{:else if incident.closed_at}
 					<dt>{config.i18n.incidentClosedAt}</dt>
-					<dd>{new Date(incident.closed_at).toLocaleString(config.i18n.locale)}</dd>
+					<dd>{new Date(incident.closed_at).toLocaleString($t('locale'))}</dd>
 				{/if}
 			</dl>
 			<div class="r">
@@ -134,7 +135,7 @@
 					{@html config.i18n.incidentCommentSummary
 						.replace(
 							/\$DATE/g,
-							`<a href=${comment.html_url}>${new Date(comment.created_at).toLocaleString(config.i18n.locale)}</a>`
+							`<a href=${comment.html_url}>${new Date(comment.created_at).toLocaleString($t('locale'))}</a>`
 						)
 						.replace(/\$AUTHOR/g, `<a href=${comment.user.html_url}>@${comment.user.login}</a>`)}
 				</div>

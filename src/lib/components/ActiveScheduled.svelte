@@ -69,7 +69,7 @@
 								)
 									.replace(
 										/\$DATE/g,
-										new Date(incident.metadata.start).toLocaleString(config.i18n.locale)
+										new Date(incident.metadata.start).toLocaleString($t('locale'))
 									)
 									.replace(
 										/\$DURATION/g,
