@@ -1,18 +1,34 @@
 // src/lib/utils/i18n.ts
-import { register, init } from 'svelte-i18n';
+import { register, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
 
-// 1) Grab all JSON under src/lib/locales (that you just created)
+// 1) Register all your JSON bundles
 const modules = import.meta.glob('../locales/*.json', { query: '?json' });
-
 for (const path in modules) {
   const m = path.match(/\/([\w-]+)\.json$/);
   if (!m) continue;
-  const locale = m[1];            // e.g. "en"
-  register(locale, modules[path]); // tell svelte-i18n how to load it
+  const loc = m[1];           // e.g. "en", "fr", etc.
+  register(loc, modules[path]);
 }
 
-// 2) Initialize the i18n store
+// 2) Determine the initial locale:
+//    - If they’ve chosen one before, use that.
+//    - Otherwise, fall back to their browser setting.
+//    - Lastly, default to "en".
+const saved = typeof localStorage !== 'undefined'
+  ? localStorage.getItem('locale')
+  : null;
+const nav = getLocaleFromNavigator();  // e.g. "en", "es", etc.
+const initial = saved || nav || 'en';
+
+// 3) Bootstrap the store
 init({
-  fallbackLocale: 'en',  // fallback if an unknown locale is used
-  initialLocale: 'en'    // start in English until we override
+  fallbackLocale: 'en',    // if they pick something we don’t have
+  initialLocale: initial
+});
+
+// 4) Whenever the locale changes, save it
+locale.subscribe((l) => {
+  if (l && typeof localStorage !== 'undefined') {
+    localStorage.setItem('locale', l);
+  }
 });

@@ -1,5 +1,6 @@
 <script>
 	import config from '$lib/data/config.json';
+	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
 	import { t } from 'svelte-i18n';
 	export let segment;
 </script>
@@ -41,7 +42,12 @@
 					</a>
 				</li>
 			{/if}
+
+			<li>
+<LangSwitcher />
+			</li>
 		</ul>
+
 	</div>
 </nav>
 
