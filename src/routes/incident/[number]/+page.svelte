@@ -1,10 +1,13 @@
-<script>
-	// 'data' is automatically passed in from the load function
-	export let data;
-	import Incident from '$lib/components/Incident.svelte';
+<!-- src/routes/incident/[number]/+page.svelte -->
+<script lang="ts">
+  import { page } from '$app/stores';
+  import { derived } from 'svelte/store';
+  import Incident from '$lib/components/Incident.svelte';
 
-	// Extract 'number' from the 'data'
-	const { number } = data;
+  // derive the `number` param directly from the URL
+  const number = derived(page, ($page) => $page.params.number);
 </script>
 
-<Incident {number} />
+<!-- pass the store to your component -->
+<!-- Incident.svelte can accept `number` as a prop or you can subscribe inline -->
+<Incident number={$number} />

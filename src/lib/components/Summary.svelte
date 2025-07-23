@@ -36,15 +36,15 @@
 				>{summary.name}</a
 			>
 			<span class={`tag ${summary.status}`}>
-				{summary.status === 'up' ? config.i18n.up : config.i18n.down}
+				{summary.status === 'up' ? $t('up') : $t('down')}
 			</span>
 		</h1>
 		<dl>
-			<dt>{config.i18n.overallUptimeTitle}</dt>
+			<dt>{$t('overallUptimeTitle')}</dt>
 			<dd>{summary.uptime}</dd>
 			{#if summary.showAverageResponseTime === undefined || summary.showAverageResponseTime}
-				<dt>{config.i18n.averageResponseTimeTitle}</dt>
-				<dd>{summary.time}{config.i18n.ms}</dd>
+				<dt>{$t('averageResponseTimeTitle')}</dt>
+				<dd>{summary.time}{$t('ms')}</dd>
 			{/if}
 		</dl>
 	{/if}

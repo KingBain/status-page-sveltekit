@@ -1,34 +1,26 @@
 // src/lib/utils/i18n.ts
-import { register, init, getLocaleFromNavigator, locale } from 'svelte-i18n';
+import { register, init, locale as $locale } from 'svelte-i18n';
+import { browser } from '$app/environment'; // <— SvelteKit helper
 
 // 1) Register all your JSON bundles
 const modules = import.meta.glob('../locales/*.json', { query: '?json' });
 for (const path in modules) {
   const m = path.match(/\/([\w-]+)\.json$/);
   if (!m) continue;
-  const loc = m[1];           // e.g. "en", "fr", etc.
-  register(loc, modules[path]);
+  register(m[1], modules[path]);
 }
 
-// 2) Determine the initial locale:
-//    - If they’ve chosen one before, use that.
-//    - Otherwise, fall back to their browser setting.
-//    - Lastly, default to "en".
-const saved = typeof localStorage !== 'undefined'
-  ? localStorage.getItem('locale')
-  : null;
-const nav = getLocaleFromNavigator();  // e.g. "en", "es", etc.
-const initial = saved || nav || 'en';
-
-// 3) Bootstrap the store
+// 2) Initialize with a known locale (SSR & client)
 init({
-  fallbackLocale: 'en',    // if they pick something we don’t have
-  initialLocale: initial
+  fallbackLocale: 'en',
+  initialLocale:  'en'
 });
 
-// 4) Whenever the locale changes, save it
-locale.subscribe((l) => {
-  if (l && typeof localStorage !== 'undefined') {
-    localStorage.setItem('locale', l);
-  }
-});
+// 3) Only in the browser do we subscribe & write to localStorage
+if (browser) {
+  $locale.subscribe((l) => {
+    if (typeof l === 'string') {
+      localStorage.setItem('locale', l);
+    }
+  });
+}

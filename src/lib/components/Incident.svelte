@@ -64,22 +64,22 @@
 </script>
 
 <svelte:head>
-	<title>{config.i18n.incidentTitle.replace('$NUMBER', number)}</title>
+	<title>{$t('incidentTitle').replace('$NUMBER', number)}</title>
 </svelte:head>
 
 <h2>
 	{#if loadingIncident}
-		{config.i18n.incidentDetails}
+		{$t('incidentDetails')}
 	{:else}
 		{incident.title}
 		<span class={`tag ${incident.state}`}>
 			{incident.state === 'closed'
 				? incident.metadata.start
-					? config.i18n.incidentCompleted
-					: config.i18n.incidentFixed
+					? $t('incidentCompleted')
+					: $t('incidentFixed')
 				: incident.metadata.start
-					? config.i18n.incidentScheduled
-					: config.i18n.incidentOngoing}
+					? $t('incidentScheduled')
+					: $t('incidentOngoing')}
 		</span>
 	{/if}
 </h2>
@@ -93,18 +93,18 @@
 				{#if incident.metadata.start}
 					<dt>
 						{new Date(incident.metadata.start).getTime() < new Date().getTime()
-							? config.i18n.startedAt
-							: config.i18n.startsAt}
+							? $t('startedAt')
+							: $t('startsAt')}
 					</dt>
 					<dd>{new Date(incident.metadata.start).toLocaleString($t('locale'))}</dd>
 				{:else}
-					<dt>{config.i18n.incidentOpenedAt}</dt>
+					<dt>{$t('incidentOpenedAt')}</dt>
 					<dd>{new Date(incident.created_at).toLocaleString($t('locale'))}</dd>
 				{/if}
 				{#if incident.metadata.start && incident.metadata.end}
-					<dt>{config.i18n.duration}</dt>
+					<dt>{$t('duration')}</dt>
 					<dd>
-						{config.i18n.durationMin.replace(
+						{$t('durationMin').replace(
 							/\$DURATION/g,
 							Math.floor(
 								(new Date(incident.metadata.end).getTime() -
@@ -114,14 +114,14 @@
 						)}
 					</dd>
 				{:else if incident.closed_at}
-					<dt>{config.i18n.incidentClosedAt}</dt>
+					<dt>{$t('incidentClosedAt')}</dt>
 					<dd>{new Date(incident.closed_at).toLocaleString($t('locale'))}</dd>
 				{/if}
 			</dl>
 			<div class="r">
 				<p>
 					<a href={`https://github.com/${config.owner}/${config.repo}/issues/${number}`}>
-						{config.i18n.incidentViewOnGitHub}
+						{$t('incidentViewOnGitHub')}
 					</a>
 				</p>
 			</div>
@@ -132,7 +132,7 @@
 					{@html md(comment.body)}
 				</p>
 				<div>
-					{@html config.i18n.incidentCommentSummary
+					{@html $t('incidentCommentSummary')
 						.replace(
 							/\$DATE/g,
 							`<a href=${comment.html_url}>${new Date(comment.created_at).toLocaleString($t('locale'))}</a>`
@@ -144,7 +144,7 @@
 	{/if}
 </section>
 
-<footer><a href={config.path}>{config.i18n.incidentBack}</a></footer>
+<footer><a href={config.path}>{$t('incidentBack')}</a></footer>
 
 <style>
 	footer {

@@ -1,5 +1,8 @@
-<script lang="ts">
+<script context="module" lang="ts">
   import '$lib/utils/i18n';
+</script>
+
+<script lang="ts">
   import Nav from '$lib/components/Nav.svelte';
   import config from '$lib/data/config.json';
   import snarkdown from 'snarkdown';

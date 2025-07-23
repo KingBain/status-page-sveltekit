@@ -45,7 +45,7 @@
 	{#if loading}
 		<Loading />
 	{:else if incidents.length}
-		<h2>{config.i18n.pastIncidents}</h2>
+		<h2>{$t('pastIncidents')}</h2>
 		{#each incidents as incident}
 			{#if incident.showHeading}
 				<h3>{new Date(incident.created_at).toLocaleDateString($t('locale'))}</h3>
@@ -55,7 +55,7 @@
 					<div>
 						<h4>{incident.title.replace('🛑', '').replace('⚠️', '').trim()}</h4>
 						<div>
-							{@html config.i18n.pastIncidentsResolved
+							{@html $t('pastIncidentsResolved')
 								.replace(
 									/\$MINUTES/g,
 									(
@@ -69,7 +69,7 @@
 					</div>
 					<div class="f r">
 						<a href={`${config.path}/incident/${incident.number}`}>
-							{config.i18n.incidentReport.replace(/\$NUMBER/g, incident.number)}
+							{$t('incidentReport').replace(/\$NUMBER/g, incident.number)}
 						</a>
 					</div>
 				</div>
