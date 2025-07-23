@@ -6,8 +6,6 @@
 	import Incidents from '$lib/components/Incidents.svelte';
 	import LiveStatus from '$lib/components/LiveStatus.svelte';
 	import Scheduled from '$lib/components/Scheduled.svelte';
-	import config from '$lib/data/config.json';
-
 </script>
 
 <svelte:head>
