@@ -4,7 +4,8 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import config from '$lib/data/config.json';
 	import { cachedResponse, createOctokit, handleError } from '$lib/utils/createOctokit';
-
+	import { t } from 'svelte-i18n';
+	
 	export let slug;
 	let loading = true;
 	const octokit = createOctokit();
@@ -62,7 +63,7 @@
 					labels,
 					datasets: [
 						{
-							label: config.i18n.responseTimeMs,
+							label: $t('responseTimeMs'),
 							data,
 							borderColor: config.graphBorderColor || '#1abc9c',
 							backgroundColor: config.graphBackgroundColor || '#89e0cf',
@@ -111,7 +112,7 @@
 	{#if loading}
 		<Loading />
 	{:else}
-		<h2>{config.i18n.sevelDayResponseTime}</h2>
+		<h2>{$t('sevelDayResponseTime')}</h2>
 		<canvas bind:this={canvas} style="width: 100%; height: 100%;"></canvas>
 	{/if}
 </div>

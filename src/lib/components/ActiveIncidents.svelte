@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import config from '$lib/data/config.json';
 	import { cachedResponse, createOctokit, handleError } from '$lib/utils/createOctokit';
+	import { t } from 'svelte-i18n';
 
 	let loading = true;
 	const octokit = createOctokit();
@@ -40,14 +41,14 @@
 </script>
 
 {#if !incidents.length && !loading}
-	<article class="up">✅ &nbsp; {config.i18n.allSystemsOperational}</article>
+	<article class="up">✅ &nbsp; {$t('allSystemsOperational')}</article>
 {/if}
 
 <section>
 	{#if loading}
 		<Loading />
 	{:else if incidents.length}
-		<h2>{config.i18n.activeIncidents}</h2>
+		<h2>{$t('activeIncidents')}</h2>
 		{#each incidents as incident}
 			<article
 				class="down down-active link {incident.title.includes('degraded') ? 'degraded' : ''}"
@@ -56,7 +57,7 @@
 					<div>
 						<h4>{incident.title.replace('🛑', '').replace('⚠️', '').trim()}</h4>
 						<div>
-							{config.i18n.activeIncidentSummary
+							{$t('activeIncidentSummary')
 								.replace(
 									/\$DATE/g,
 									new Date(incident.created_at).toLocaleString(config.i18n.locale)
@@ -66,7 +67,7 @@
 					</div>
 					<div class="f r">
 						<a href={`${config.path}/incident/${incident.number}`}>
-							{config.i18n.incidentReport.replace(/\$NUMBER/g, incident.number)}
+							{$t('incidentReport').replace(/\$NUMBER/g, incident.number)}
 						</a>
 					</div>
 				</div>

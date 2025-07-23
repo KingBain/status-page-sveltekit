@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import config from '$lib/data/config.json';
 	import { cachedResponse, createOctokit, handleError } from '$lib/utils/createOctokit';
+	import { t } from 'svelte-i18n';
 
 	let loading = true;
 	const octokit = createOctokit();
@@ -54,7 +55,7 @@
 	{#if loading}
 		<Loading />
 	{:else if incidents.length}
-		<h2>{config.i18n.scheduledMaintenance}</h2>
+		<h2>{$t('scheduledMaintenance')}</h2>
 		{#each incidents as incident}
 			<article class="degraded degraded-active link">
 				<div class="f">
@@ -63,8 +64,8 @@
 						{#if incident.metadata.start && incident.metadata.end}
 							<div>
 								{(new Date(incident.metadata.start).getTime() < new Date().getTime()
-									? config.i18n.scheduledMaintenanceSummaryStarted
-									: config.i18n.scheduledMaintenanceSummaryStarts
+									? $t('scheduledMaintenanceSummaryStarted')
+									: $t('scheduledMaintenanceSummaryStarts')
 								)
 									.replace(
 										/\$DATE/g,
@@ -83,7 +84,7 @@
 					</div>
 					<div class="f r">
 						<a href={`${config.path}/incident/${incident.number}`}>
-							{config.i18n.incidentReport.replace(/\$NUMBER/g, incident.number)}
+							{$t('incidentReport').replace(/\$NUMBER/g, incident.number)}
 						</a>
 					</div>
 				</div>
