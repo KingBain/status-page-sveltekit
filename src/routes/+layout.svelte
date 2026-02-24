@@ -2,7 +2,22 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import config from '$lib/data/config.json';
 	import snarkdown from 'snarkdown';
+	import { onMount } from 'svelte';
 	export let segment;
+
+	onMount(() => {
+		const customJs = config['status-website']?.js;
+		if (!customJs || typeof document === 'undefined') return;
+
+		const script = document.createElement('script');
+		script.setAttribute('data-status-website-script', 'true');
+		script.textContent = customJs;
+		document.body.appendChild(script);
+
+		return () => {
+			script.remove();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -70,11 +85,8 @@
 			<meta name={meta.name} content={meta.content} />
 		{/each}
 	{/if}
-	{#if config['status-website'].css}
+	{#if (config['status-website'] || {}).css}
 		{@html `<style>${config['status-website'].css}</style>`}
-	{/if}
-	{#if config['status-website'].js}
-		{@html `<script>${config['status-website'].js}</script>`}
 	{/if}
 </svelte:head>
 
