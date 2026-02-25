@@ -26,13 +26,16 @@
 				)
 			).data;
 			incidents = incidents.map((incident, index) => {
+				const body = incident.body || '';
 				incident.showHeading =
 					index === 0 ||
 					new Date(incidents[index - 1].created_at).toLocaleDateString() !==
 						new Date(incident.created_at).toLocaleDateString();
 				incident.metadata = {};
-				if (incident.body.includes('<!--')) {
-					const summary = incident.body.split('<!--')[1].split('-->')[0];
+				const commentStart = '<' + '!--';
+				const commentEnd = '--' + '>';
+				if (body.includes(commentStart)) {
+					const summary = body.split(commentStart)[1].split(commentEnd)[0];
 					const lines = summary
 						.split('\n')
 						.filter((i) => i.trim())

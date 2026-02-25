@@ -30,9 +30,12 @@
 					})
 				)
 			).data;
+			const body = incident.body || '';
 			incident.metadata = {};
-			if (incident.body.includes('<!--')) {
-				const summary = incident.body.split('<!--')[1].split('-->')[0];
+			const commentStart = '<' + '!--';
+			const commentEnd = '--' + '>';
+			if (body.includes(commentStart)) {
+				const summary = body.split(commentStart)[1].split(commentEnd)[0];
 				const lines = summary
 					.split('\n')
 					.filter((i) => i.trim())
