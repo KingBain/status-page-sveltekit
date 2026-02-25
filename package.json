@@ -36,7 +36,7 @@
 		"@sveltejs/kit": "^2.53.1",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@types/node": "^25.3.0",
-		"@types/rollup": "^0.51.4",
+		"@types/rollup": "^0.54.0",
 		"cypress": "^15.10.0",
 		"eslint": "^10.0.2",
 		"eslint-config-prettier": "^10.1.8",
