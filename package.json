@@ -2,6 +2,10 @@
 	"name": "@kingbain/status-page-sveltekit",
 	"private": false,
 	"version": "0.0.17",
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+  	},
 	"type": "module",
 	"repository": "https://github.com/KingBain/status-page-sveltekit",
 	"scripts": {
