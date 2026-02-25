@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    
+    # This section formats the PR titles for semantic-release
+    commit-message:
+      # Use "fix" for production dependencies (triggers a Patch release)
+      prefix: "fix"
+      # Use "chore" for devDependencies (prevents a release being triggered)
+      prefix-development: "chore"
+      # Includes the package name in brackets, e.g., fix(deps): ...
+      include: "scope"
+
+    # Optional: Group updates to reduce PR noise
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "*" # This ensures only non-dev dependencies go here
+      devDependencies:
+        dependency-type: "development"
+        patterns:
+          - "*"

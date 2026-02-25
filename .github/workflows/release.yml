@@ -1,5 +1,5 @@
 ---
-name: Release to js
+name: Release
 
 on:
   push:
